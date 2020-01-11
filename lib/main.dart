@@ -25,6 +25,36 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> checkVariable = [];
+
+  List questions = [
+    {'question': "What a sunny day", 'answer': true},
+    {'question': "What a good day", 'answer': false},
+    {'question': "What a bad day", 'answer': true},
+  ];
+
+  int indexOfQuestion = 0;
+  void addCheck(bool answer) {
+    if (answer == questions[indexOfQuestion]['answer']) {
+      checkVariable.add(Icon(
+        Icons.check,
+        color: Colors.green,
+      ));
+    } else {
+      checkVariable.add(Icon(
+        Icons.close,
+        color: Colors.red,
+      ));
+    }
+    if (indexOfQuestion < questions.length - 1) {
+      indexOfQuestion = indexOfQuestion + 1;
+    }
+    setState(() {
+      indexOfQuestion = indexOfQuestion;
+      checkVariable = checkVariable;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,7 +67,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                'This is where the question text will go.',
+                questions[indexOfQuestion]['question'],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
@@ -62,6 +92,7 @@ class _QuizPageState extends State<QuizPage> {
               ),
               onPressed: () {
                 //The user picked true.
+                addCheck(true);
               },
             ),
           ),
@@ -79,11 +110,14 @@ class _QuizPageState extends State<QuizPage> {
                 ),
               ),
               onPressed: () {
-                //The user picked false.
+                addCheck(false);
               },
             ),
           ),
         ),
+        Row(
+          children: checkVariable,
+        )
         //TODO: Add a Row here as your score keeper
       ],
     );
