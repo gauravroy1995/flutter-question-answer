@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './question.dart';
 import './question_bank.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 void main() => runApp(Quizzler());
 QuestionBank questionNewObject = QuestionBank();
@@ -40,6 +41,11 @@ class _QuizPageState extends State<QuizPage> {
         Icons.check,
         color: Colors.green,
       ));
+      Alert(
+              context: context,
+              title: "RFLUTTER ALERT",
+              desc: "Flutter is more awesome with RFlutter Alert.")
+          .show();
     } else {
       checkVariable.add(Icon(
         Icons.close,
