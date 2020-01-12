@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import './question.dart';
+import './question_bank.dart';
 
 void main() => runApp(Quizzler());
+QuestionBank questionNewObject = QuestionBank();
 
 class Quizzler extends StatelessWidget {
   @override
@@ -27,15 +30,12 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Icon> checkVariable = [];
 
-  List questions = [
-    {'question': "What a sunny day", 'answer': true},
-    {'question': "What a good day", 'answer': false},
-    {'question': "What a bad day", 'answer': true},
-  ];
+  var questionName = questionNewObject.questionText();
 
   int indexOfQuestion = 0;
   void addCheck(bool answer) {
-    if (answer == questions[indexOfQuestion]['answer']) {
+    bool isCorrect = questionNewObject.checkAnswer(answer);
+    if (isCorrect == true) {
       checkVariable.add(Icon(
         Icons.check,
         color: Colors.green,
@@ -46,11 +46,9 @@ class _QuizPageState extends State<QuizPage> {
         color: Colors.red,
       ));
     }
-    if (indexOfQuestion < questions.length - 1) {
-      indexOfQuestion = indexOfQuestion + 1;
-    }
+    questionNewObject.nextQuestion();
+
     setState(() {
-      indexOfQuestion = indexOfQuestion;
       checkVariable = checkVariable;
     });
   }
@@ -67,7 +65,7 @@ class _QuizPageState extends State<QuizPage> {
             padding: EdgeInsets.all(10.0),
             child: Center(
               child: Text(
-                questions[indexOfQuestion]['question'],
+                questionNewObject.questionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 25.0,
